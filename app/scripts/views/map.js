@@ -1,4 +1,4 @@
-/*global define */
+/*global define, google, pubsub */
 define([
     'jquery',
     'backbone',
