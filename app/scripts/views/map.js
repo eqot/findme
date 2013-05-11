@@ -21,8 +21,7 @@ define([
         mapId: null,
         map: null,
         marker: null,
-        location: new Location(),
-        // nickname: null,
+        location: null,
         nickname: $.cookie('nickname') || '',
 
         template: _.template(NicknameTemplate),
@@ -32,6 +31,7 @@ define([
 
             this.mapId = id;
 
+            this.location = new Location();
             this.listenTo(this.location, 'change', this.onChanged);
 
             var that = this;
