@@ -8,8 +8,8 @@ define([
 
     var Location = Backbone.Model.extend({
         defaults: {
-            lat: 35.681382,
-            lng: 139.766084
+            lat: $.cookie('lat') || 35.681382,
+            lng: $.cookie('lng') || 139.766084
         },
 
         initialize: function () {
@@ -18,9 +18,15 @@ define([
             var that = this;
             if (navigator.geolocation) {
                 navigator.geolocation.watchPosition(function (position) {
+                    var lat = position.coords.latitude;
+                    var lng = position.coords.longitude;
+
+                    $.cookie('lat', lat);
+                    $.cookie('lng', lng);
+
                     that.set({
-                        'lat': position.coords.latitude,
-                        'lng': position.coords.longitude
+                        'lat': lat,
+                        'lng': lng
                     });
                 });
             }
