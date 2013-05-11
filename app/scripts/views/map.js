@@ -73,8 +73,7 @@ define([
 
             pubsub.publish(this.mapId, {
                 nickname: this.nickname,
-                lat: this.location.get('lat'),
-                lng: this.location.get('lng')
+                latlng: latlng
             });
         },
 
