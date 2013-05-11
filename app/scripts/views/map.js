@@ -38,7 +38,7 @@ define([
             pubsub.connect(function () {
                 pubsub.subscribe(that.mapId, that.onRecived);
 
-                pubsub.publish(that.mapId, 'test');
+                that.onChanged();
             });
 
             this.render();
