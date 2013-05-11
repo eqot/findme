@@ -18,24 +18,18 @@ define([
             'keydown #nickname': 'updateNickname'
         },
 
-        map: null,
         mapId: null,
-        location: null,
+        map: null,
+        marker: null,
+        location: new Location(),
 
         template: _.template(NicknameTemplate),
-
-        defaultMapOptions: {
-            center: new google.maps.LatLng(35.681382, 139.766084), // Tokyo station
-            zoom: 15,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        },
 
         initialize: function (model, id) {
             // console.log('MapView');
 
             this.mapId = id;
 
-            this.location = new Location();
             this.listenTo(this.location, 'change', this.onChanged);
 
             var that = this;
@@ -49,22 +43,33 @@ define([
         },
 
         render: function () {
-            // this.$el.empty();
             $('#view').append(this.el);
 
-            this.map = new google.maps.Map((this.$el)[0], this.defaultMapOptions);
+            var defaultMapOptions = {
+                center: this.location.getLatLng(),
+                zoom: 15,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            this.map = new google.maps.Map((this.$el)[0], defaultMapOptions);
+
+            var nickname = $.cookie('nickname') || '';
+
+            this.marker = new google.maps.Marker({
+                position: this.location.getLatLng(),
+                map: this.map,
+                title: nickname
+            });
 
             this.$el.append(this.template());
-            $('#nickname').val($.cookie('nickname') || '');
+            $('#nickname').val(nickname);
         },
 
         onChanged: function () {
             console.log('onChanged');
 
-            var pos = new google.maps.LatLng(
-                this.location.get('lat'),
-                this.location.get('lng'));
-            this.map.setCenter(pos);
+            var latlng = this.location.getLatLng();
+            this.map.setCenter(latlng);
+            this.marker.setPosition(latlng);
         },
 
         onRecived: function (data) {
