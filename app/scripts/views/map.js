@@ -3,7 +3,8 @@ define([
     'jquery',
     'backbone',
     'underscore',
-    'http://localhost:9001/pubsub/client.js'
+    'http://localhost:9001/pubsub/client.js',
+    'async!http://maps.googleapis.com/maps/api/js?sensor=true'
 ], function ($, Backbone, _) {
     'use strict';
 
@@ -11,6 +12,14 @@ define([
         el: $('#view'),
 
         id: null,
+
+        map: null,
+
+        defaultMapOptions: {
+            center: new google.maps.LatLng(35.681382,139.766084), // Tokyo station
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        },
 
         initialize: function (model, id) {
             // console.log('MapView');
@@ -23,6 +32,12 @@ define([
 
                 pubsub.publish(that.id, 'test');
             });
+
+            this.render();
+        },
+
+        render: function () {
+            this.map = new google.maps.Map((this.$el)[0], this.defaultMapOptions);
         },
 
         onRecived: function (data) {
