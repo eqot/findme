@@ -8,8 +8,8 @@ define([
 
     var Location = Backbone.Model.extend({
         defaults: {
-            lat: $.cookie('lat') || 35.681382,
-            lng: $.cookie('lng') || 139.766084
+            lat: parseFloat($.cookie('lat')) || 35.681382,
+            lng: parseFloat($.cookie('lng')) || 139.766084
         },
 
         initialize: function () {
