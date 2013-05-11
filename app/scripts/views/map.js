@@ -70,6 +70,12 @@ define([
             var latlng = this.location.getLatLng();
             this.map.setCenter(latlng);
             this.marker.setPosition(latlng);
+
+            pubsub.publish(this.mapId, {
+                nickname: $('#nickname').val(),
+                lat: this.location.get('lat'),
+                lng: this.location.get('lng')
+            });
         },
 
         onRecived: function (data) {
