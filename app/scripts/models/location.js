@@ -1,9 +1,8 @@
-/*global define */
+/*global define, google */
 define([
     'jquery',
-    'backbone',
-    'underscore'
-], function ($, Backbone, _) {
+    'backbone'
+], function ($, Backbone) {
     'use strict';
 
     var Location = Backbone.Model.extend({
