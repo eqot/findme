@@ -10,6 +10,10 @@ define([
     var TopView = Backbone.View.extend({
         el: $('#view'),
 
+        events: {
+            'click #create': 'createMap'
+        },
+
         template: _.template(TopViewTemplate),
 
         initialize: function () {
@@ -20,6 +24,10 @@ define([
 
         render: function () {
             this.$el.html(this.template());
+        },
+
+        createMap: function () {
+            console.log('ok');
         }
     });
 
