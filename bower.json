@@ -9,8 +9,7 @@
     "modernizr": "~2.6.2",
     "jquery": "~1.9.1",
     "underscore": "~1.4.4",
-    "backbone": "~1.0.0",
-    "pubsub2": "https://github.com/eqot/pubsub2.git"
+    "backbone": "~1.0.0"
   },
   "devDependencies": {}
 }

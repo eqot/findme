@@ -2,9 +2,11 @@
   "name": "findme",
   "version": "0.0.0",
   "scripts": {
-    "start": "node-dev app/components/pubsub2/server/app.js"
+    "start": "node-dev node_modules/pubsub/server/app.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "pubsub": "https://github.com/eqot/pubsub/tarball/master"
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-copy": "~0.4.1",
