@@ -22,6 +22,8 @@ define([
         map: null,
         marker: null,
         location: new Location(),
+        // nickname: null,
+        nickname: $.cookie('nickname') || '',
 
         template: _.template(NicknameTemplate),
 
@@ -52,16 +54,14 @@ define([
             };
             this.map = new google.maps.Map((this.$el)[0], defaultMapOptions);
 
-            var nickname = $.cookie('nickname') || '';
-
             this.marker = new google.maps.Marker({
                 position: this.location.getLatLng(),
                 map: this.map,
-                title: nickname
+                title: this.nickname
             });
 
             this.$el.append(this.template());
-            $('#nickname').val(nickname);
+            $('#nickname').val(this.nickname);
         },
 
         onChanged: function () {
@@ -72,7 +72,7 @@ define([
             this.marker.setPosition(latlng);
 
             pubsub.publish(this.mapId, {
-                nickname: $('#nickname').val(),
+                nickname: this.nickname,
                 lat: this.location.get('lat'),
                 lng: this.location.get('lng')
             });
@@ -85,7 +85,8 @@ define([
         updateNickname: function () {
             // console.log($('#nickname').val());
 
-            $.cookie('nickname', $('#nickname').val());
+            this.nickname = $('#nickname').val();
+            $.cookie('nickname', this.nickname);
         }
     });
 
