@@ -26,8 +26,22 @@ define([
 
         template: _.template(NicknameTemplate),
 
+        ICON_BASE_URI: 'http://maps.google.co.jp/mapfiles/ms/icons/',
+        ICONS: [
+            'red-dot.png',
+            'blue-dot.png',
+            'green-dot.png',
+            'ltblue-dot.png',
+            'yellow-dot.png',
+            'purple-dot.png',
+            'pink-dot.png',
+            'orange-dot.png'
+        ],
+
         initialize: function (model, id) {
             // console.log('MapView');
+
+            _.bindAll(this, 'onRecived');
 
             this.mapId = id;
 
@@ -53,13 +67,13 @@ define([
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
             this.map = new google.maps.Map((this.$el)[0], defaultMapOptions);
-
+/*
             this.marker = new google.maps.Marker({
                 position: this.location.getLatLng(),
                 map: this.map,
                 title: this.nickname
             });
-
+*/
             this.$el.append(this.template());
             $('#nickname').val(this.nickname);
         },
@@ -69,7 +83,7 @@ define([
 
             var latlng = this.location.getLatLng();
             this.map.setCenter(latlng);
-            this.marker.setPosition(latlng);
+            // this.marker.setPosition(latlng);
 
             pubsub.publish(this.mapId, {
                 nickname: this.nickname,
@@ -79,6 +93,17 @@ define([
 
         onRecived: function (data) {
             console.log(data);
+
+            var marker = new google.maps.Marker({
+                map: this.map,
+                position: new google.maps.LatLng(data.latlng.kb, data.latlng.lb),
+                title: data.nickname,
+                icon: this.getIcon(data._index)
+            });
+        },
+
+        getIcon: function (index) {
+            return this.ICON_BASE_URI + this.ICONS[index % 7];
         },
 
         updateNickname: function () {
