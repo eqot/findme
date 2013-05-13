@@ -87,7 +87,8 @@ define([
 
             pubsub.publish(this.mapId, {
                 nickname: this.nickname,
-                latlng: latlng
+                lat: this.location.get('lat'),
+                lng: this.location.get('lng')
             });
         },
 
@@ -96,7 +97,7 @@ define([
 
             var marker = new google.maps.Marker({
                 map: this.map,
-                position: new google.maps.LatLng(data.latlng.kb, data.latlng.lb),
+                position: new google.maps.LatLng(data.lat, data.lng),
                 title: data.nickname,
                 icon: this.getIcon(data._index)
             });
